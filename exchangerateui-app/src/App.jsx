@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import CurrencyConverter from "./components/CurrencyConverter";
+import "./styles/main.css";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="app">
+      <header className="topbar">
+        <h1>Exchange Rate API - Currency Converter</h1>
+        <p className="subtitle">Projeto de desenvolvimento de uma UI utilizando React para consumir a API pública chamada "ExchangeRate-API". Esse novo projeto front-end consiste num convertedor de moeda que recupera e exibe dados de taxas de troca em tempo real.  </p> <br /><br />
+        <p className="englishSubtitle">An application built in React using a public API called "ExchangeRate-API". This new front-end project is a currency converter that retrieves and displays real-time exchange rate data. </p>
+      </header>
 
-export default App
+      <main className="container">
+        <CurrencyConverter />
+      </main>
+
+      <footer className="footer">
+        <small>Desenvolvido pelo grupo composto por Iclei Arthur, Carlos Eduardo, Guilerme Batista e Anderson Sales.</small>
+        <small>Developed by Iclei Arthur, Carlos Eduardo, Guilerme Batista and Anderson Sales</small>
+
+      </footer>
+
+    </div>
+  );
+}

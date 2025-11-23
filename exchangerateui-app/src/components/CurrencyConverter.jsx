@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchLatestRatesAsync } from "../utils/api";
-import "./currency-converter.css";
+import "./styles/main.css";
 
 export default function CurrencyConverter() {
   const [base, setBase] = useState("BRL");
