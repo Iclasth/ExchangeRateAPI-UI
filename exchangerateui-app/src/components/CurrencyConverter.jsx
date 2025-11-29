@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { fetchLatestRatesAsync } from "../utils/api";
-import "./styles/main.css";
+import "../styles/main.css";
+
+const currencies = [
+  "BRL", "USD", "EUR", "GBP", "JPY",
+  "AED","AFN","ALL","AMD","ANG","AOA","ARS",
+  "AUD","AWG","AZN","BAM","BBD","BDT","BGN",
+  "BHD","BIF","BMD","BND","BOB"
+];
+
+function formatBR(value) {
+  return Number(value).toFixed(2).replace(".", ",");
+}
 
 export default function CurrencyConverter() {
   const [base, setBase] = useState("BRL");
   const [rates, setRates] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [amount, setAmount] = useState(1);
   const [targetCurrency, setTargetCurrency] = useState("USD");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function loadRatesAsync() {
+    async function loadRates() {
       setLoading(true);
       setError(null);
 
@@ -21,29 +30,50 @@ export default function CurrencyConverter() {
         const data = await fetchLatestRatesAsync(base);
 
         if (data.result === "success") {
-          if (!cancelled) setRates(data.conversion_rates);
+          setRates(data.conversion_rates);
         } else {
-          throw new Error(data["error-type"] || "API error");
+          setError("Erro na API");
         }
       } catch (err) {
-        if (!cancelled) setError(err.message);
-      } finally {
-        if (!cancelled) setLoading(false);
+        setError("Erro ao carregar taxas");
       }
+
+      setLoading(false);
     }
 
-    loadRatesAsync();
-    return () => {
-      cancelled = true;
-    };
+    loadRates();
   }, [base]);
 
-  function handleConvert() {
-    if (!rates) return null;
+  function convert() {
+    if (!rates) return "--";
     const rate = rates[targetCurrency];
     if (!rate) return "--";
-    return (amount * rate).toFixed(4);
+    return (amount * rate).toFixed(2);
   }
+
+  function invert() {
+    const oldBase = base;
+    const oldTarget = targetCurrency;
+    setBase(oldTarget);
+    setTargetCurrency(oldBase);
+  }
+
+  function getDisplayRates() {
+  if (!rates) return [];
+
+  const always = [];
+
+  if (rates["USD"]) always.push(["USD", rates["USD"]]);
+  if (rates["EUR"]) always.push(["EUR", rates["EUR"]]);
+  if (rates["BRL"]) always.push(["BRL", rates["BRL"]]); 
+
+  const other = Object.entries(rates)
+    .filter(([code]) => code !== "USD" && code !== "EUR" && code !== "BRL")
+    .slice(0, 12); 
+
+  return [...always, ...other];
+}
+
 
   return (
     <div className="currency-converter">
@@ -52,61 +82,64 @@ export default function CurrencyConverter() {
       <div className="row">
         <label>
           Base:
-          <input
-            value={base}
-            onChange={(e) => setBase(e.target.value.toUpperCase())}
-          />
+          <select value={base} onChange={(e) => setBase(e.target.value)}>
+            {currencies.map(code => (
+              <option key={code} value={code}>{code}</option>
+            ))}
+          </select>
         </label>
 
         <label>
-          Value:
+          Valor:
           <input
             type="number"
+            step="0.01"
             value={amount}
-            onChange={(e) => setAmount(parseFloat(e.target.value))}
+            onChange={(e) => setAmount(Number(e.target.value))}
           />
         </label>
 
         <label>
-          To:
-          <input
+          Para:
+          <select
             value={targetCurrency}
-            onChange={(e) => setTargetCurrency(e.target.value.toUpperCase())}
-          />
+            onChange={(e) => setTargetCurrency(e.target.value)}
+          >
+            {currencies.map(code => (
+              <option key={code} value={code}>{code}</option>
+            ))}
+          </select>
         </label>
       </div>
 
+      <button className="invert-btn" onClick={invert}>
+        Inverter moedas
+      </button>
+
       <div className="result-row">
-        {loading && <div className="muted">Loading rates...</div>}
-        {error && <div className="error">Error: {error}</div>}
+        {loading && <div className="muted">Carregando...</div>}
+        {error && <div className="error">{error}</div>}
         {!loading && !error && rates && (
-          <>
-            <div className="big">
-              {amount} {base} = {handleConvert()} {targetCurrency}
-            </div>
-            <div className="small">
-              Rate {base} -&gt; {targetCurrency}: {rates[targetCurrency] ?? "--"}
-            </div>
-          </>
+          <div className="big">
+            {formatBR(amount)} {base} = {formatBR(convert())} {targetCurrency}
+          </div>
         )}
       </div>
 
       <hr />
 
-      <h3>Some Rates (base {base})</h3>
+      <h3>Conversões — 1 {base} para outras moedas</h3>
 
       <div className="rates-list">
         {rates ? (
-          Object.entries(rates)
-            .slice(0, 20)
-            .map(([code, value]) => (
-              <div key={code} className="rate-item">
-                <div className="code">{code}</div>
-                <div className="value">{value}</div>
-              </div>
-            ))
+          getDisplayRates().map(([code, value]) => (
+            <div key={code} className="rate-item">
+              <div className="code">{code}</div>
+              <div className="value">{formatBR(value)}</div>
+            </div>
+          ))
         ) : (
-          <div className="muted">No rates available.</div>
+          <div className="muted">Sem taxas disponíveis.</div>
         )}
       </div>
     </div>
