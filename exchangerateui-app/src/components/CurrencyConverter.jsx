@@ -141,7 +141,7 @@ export default function CurrencyConverter() {
         Inverter moedas
       </button>
 
-      <button className="calc-btn" onClick={handleCalculate}>
+      <button className="calculate-btn" onClick={handleCalculate}>
         Calcular
       </button>
 

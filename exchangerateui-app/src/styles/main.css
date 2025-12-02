@@ -81,6 +81,23 @@ select {
   color: #222;
 }
 
+.calculate-btn {
+  padding: 10px 16px;
+  background: #4a67f5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.calculate-btn:hover {
+  background: #3b52d0;
+}
+
 .muted {
   color: #777;
 }
