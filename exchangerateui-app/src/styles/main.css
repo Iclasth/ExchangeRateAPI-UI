@@ -1,4 +1,4 @@
-body {
+body { 
   margin: 0;
   font-family: Arial, sans-serif;
   background: #f0f2f5;
@@ -57,21 +57,42 @@ select {
   font-size: 14px;
   background: #fafafa;
 }
-
-.invert-btn {
-  margin-bottom: 15px;
-  padding: 10px 16px;
-  border: none;
+.invert-btn,
+.calculate-btn {
+  padding: 10px 18px;
   background: #4a67f5;
   color: white;
-  border-radius: 6px;
+  border: none;
+  border-radius: 12px; 
   cursor: pointer;
   font-size: 14px;
-  transition: 0.2s;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.15s ease;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12);
 }
 
-.invert-btn:hover {
+.invert-btn {
+  margin-bottom: 12px;
+}
+
+.calculate-btn {
+  margin-top: 6px;
+  margin-bottom: 18px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 180px; 
+}
+
+.invert-btn:hover,
+.calculate-btn:hover {
   background: #3b52d0;
+  transform: translateY(-2px);
+}
+
+.invert-btn:active,
+.calculate-btn:active {
+  transform: translateY(0);
 }
 
 .big {
@@ -79,23 +100,6 @@ select {
   font-weight: bold;
   margin: 10px 0;
   color: #222;
-}
-
-.calculate-btn {
-  padding: 10px 16px;
-  background: #4a67f5;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: 0.2s;
-  margin-top: 10px;
-  display: inline-block;
-}
-
-.calculate-btn:hover {
-  background: #3b52d0;
 }
 
 .muted {
