@@ -129,7 +129,7 @@ export default function CurrencyConverter() {
 
       <div className="row">
         <label>
-          Base:
+          De:
           <select value={base} onChange={(e) => { 
             setBase(e.target.value);
             setCalculated(null);
