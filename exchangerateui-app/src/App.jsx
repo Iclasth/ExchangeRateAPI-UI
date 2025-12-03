@@ -25,12 +25,12 @@ export default function App() {
 
       <footer className="footer">
         <small>
-          Desenvolvido pelo grupo composto por Iclei Arthur, Carlos Eduardo,
-          Guilerme Batista e Anderson Sales.
+          Desenvolvido pelo grupo composto por Iclei Arthur, Carlos Eduardo de Lira,
+          Guilherme Batista e Anderson Sales.
         </small>
 
         <small>
-          Developed by Iclei Arthur, Carlos Eduardo, Guilerme Batista and Anderson Sales.
+          Developed by Iclei Arthur, Carlos Eduardo, Guilherme Batista and Anderson Sales.
         </small>
       </footer>
     </div>
