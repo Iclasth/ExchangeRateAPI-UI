@@ -30,7 +30,7 @@ export default function App() {
         </small>
 
         <small>
-          Developed by Iclei Arthur, Carlos Eduardo, Guilherme Batista and Anderson Sales.
+          Developed by Iclei Arthur, Carlos Eduardo de Lira, Guilherme Batista and Anderson Sales.
         </small>
       </footer>
     </div>
